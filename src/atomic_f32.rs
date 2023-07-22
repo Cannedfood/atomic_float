@@ -744,3 +744,18 @@ impl From<f32> for AtomicF32 {
         Self::new(f)
     }
 }
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for AtomicF32 {
+    #[inline]
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        self.load(SeqCst).serialize(serializer)
+    }
+}
+#[cfg(feature = "serde")]
+impl<'a> serde::Deserialize<'a> for AtomicF32 {
+    #[inline]
+    fn deserialize<D: serde::Deserializer<'a>>(deserializer: D) -> Result<Self, D::Error> {
+        f32::deserialize(deserializer).map(Self::from)
+    }
+}
