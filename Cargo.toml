@@ -16,6 +16,7 @@ homepage = "https://github.com/thomcc/atomic_float"
 [features]
 default = ["atomic_f64"]
 atomic_f64 = []
+serde = ["dep:serde"]
 
 [dependencies]
 serde = { version = "1", optional = true, default-features = false }
